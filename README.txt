@@ -20,7 +20,7 @@ Usage
     
         <xsl:stylesheet 
          xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-         xmlns:wadl="http://wadl.dev.java.net/2009/02"
+         xmlns:wadl="http://research.sun.com/wadl/2006/10"
          xmlns:xs="http://www.w3.org/2001/XMLSchema"
          xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns="http://www.w3.org/1999/xhtml">
