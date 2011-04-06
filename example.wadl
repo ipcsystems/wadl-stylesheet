@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="wadl.xsl"?>
+<!-- 
+    example.wadl (05-Apr-2011)
+    
+    Example Web Application Description Language (WADL) Web Service interface specification,
+    which demonstrates my WADL XSLT stylesheet, wadl.xsl.
+
+    Mark Sawers <mark.sawers@ipc.com>
+    
+    Copyright (c) 2011 IPC Systems, Inc.
+
+    This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 License.
+    To view a copy of this license, visit 
+        http://creativecommons.org/licenses/by-sa/3.0/
+    or send a letter to 
+        Creative Commons
+        543 Howard Street, 5th Floor
+        San Francisco, California, 94105, USA
+ -->
+<wadl:application xmlns:wadl="http://wadl.dev.java.net/2009/02"
+    xmlns:jr="http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" xmlns:r="http://anydomain/ReportParameters.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd ">
+    <wadl:doc title="Report Service">
+        Generates reports with parameter data or template reference in requested
+        format. Additionally persists
+        custom report definitions.
+    </wadl:doc>
+    <wadl:grammars>
+        <wadl:include href="ReportParameters.xsd" />
+        <wadl:include href="http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" />
+    </wadl:grammars>
+
+    <wadl:resources base="http://anyhost">
+        <wadl:resource path="report">
+            <wadl:doc title="Description">Domain function methods</wadl:doc>
+            <wadl:resource path="standard/{reportName}">
+                <wadl:doc title="Description">Executes (generates) custom and standard reports. Persists standard
+                    reports.
+                </wadl:doc>
+                <wadl:method name="GET" id="getReport">
+                    <wadl:doc>Description: Executes (generates) custom or standard report.</wadl:doc>
+                    <wadl:doc>Example: http://anyhost/report/standard/GroupedUsers</wadl:doc>
+                    <wadl:request>
+                        <wadl:param name="authorization" style="header" type="xsi:string" required="true">
+                            <wadl:doc>HTTP Basic Authentication</wadl:doc>
+                        </wadl:param>
+                        <wadl:param name="limit" style="query" type="xsi:int" required="false">
+                            <wadl:doc>record limit (page size)</wadl:doc>
+                        </wadl:param>
+                        <wadl:param name="offset" style="query" type="integer" required="false">
+                            <wadl:doc>record offset (page number)</wadl:doc>
+                        </wadl:param>
+                        <wadl:param name="format" style="query" type="xsi:string">
+                            <wadl:option value="xml" mediaType="application/xml"/>
+                            <wadl:option value="pdf" mediaType="application/pdf"/>
+                            <wadl:doc>Output format</wadl:doc>
+                        </wadl:param>
+                        <wadl:param name="style" style="query" type="xsi:string">
+                            <wadl:option value="brief"/>
+                            <wadl:option value="detailed"/>
+                            <wadl:doc>Report format</wadl:doc>
+                        </wadl:param>
+                        <wadl:representation mediaType="application/xml" element="r:reportParameters"
+                            href="ReportParameters.xsd">
+                            <wadl:doc title="Report Parameters" />
+                        </wadl:representation>
+                    </wadl:request>
+                    <wadl:response status="200">
+                        <wadl:doc title="OK" />
+                        <wadl:representation mediaType="application/html">
+                            <wadl:doc title="HTML"> Hypertext Markup Language (HTML) formatted report</wadl:doc>
+                        </wadl:representation>
+                        <wadl:representation mediaType="application/pdf">
+                            <wadl:doc title="PDF"> Portable Document Format (PDF) formatted report</wadl:doc>
+                        </wadl:representation>
+                        <wadl:representation mediaType="text/csv">
+                            <wadl:doc title="CSV"> Comma Separated Values (CSV) formatted report</wadl:doc>
+                        </wadl:representation>
+                    </wadl:response>
+                    <wadl:response status="400">
+                        <wadl:doc title="Bad wadl:request" />
+                    </wadl:response>
+                    <wadl:response status="403">
+                        <wadl:doc title="Forbidden">User does not have privilege to read the wadl:resource</wadl:doc>
+                    </wadl:response>
+                    <wadl:response status="404">
+                        <wadl:doc title="Not Found" />
+                    </wadl:response>
+                </wadl:method>
+
+                <wadl:method name="PUT" id="putReport">
+                    <wadl:doc>Description: Creates or updates custom report.</wadl:doc>
+                    <wadl:doc>Example: http://anyhost/report/standard/QuarterlyReport</wadl:doc>
+                    <wadl:request>
+                        <wadl:param name="Authorization" style="header" type="xsi:string" required="true">
+                            <wadl:doc>HTTP Basic Authentication</wadl:doc>
+                        </wadl:param>
+                        <wadl:representation mediaType="application/xml" element="jr:jasperReport"
+                            href="http://jasperreports.sourceforge.net/xsd/jasperreport.xsd">
+                            <wadl:doc title="Jasper Report Definition" />
+                        </wadl:representation>
+                    </wadl:request>
+                    <wadl:response status="200">
+                        <wadl:doc title="OK">wadl:resource was updated</wadl:doc>
+                    </wadl:response>
+                    <wadl:response status="201">
+                        <wadl:doc title="Created">wadl:resource was created</wadl:doc>
+                    </wadl:response>
+                    <wadl:response status="403">
+                        <wadl:doc title="Forbidden">User does not have privilege to create or update the wadl:resource
+                        </wadl:doc>
+                    </wadl:response>
+                    <wadl:response status="404">
+                        <wadl:doc title="Not Found" />
+                    </wadl:response>
+                </wadl:method>
+            </wadl:resource>
+            <wadl:resource path="custom/{reportName}">
+                <wadl:param type="xsi:string" style="template" required="true" name="reportName">
+                    <wadl:doc>Report name</wadl:doc>
+                </wadl:param>
+                <wadl:method name="DELETE" id="deleteReport">
+                    <wadl:doc>Description: Deletes custom report.</wadl:doc>
+                    <wadl:doc>Example: http://anyhost/report/custom/deviceHealthTest</wadl:doc>
+                    <wadl:request>
+                        <wadl:param name="Authorization" style="header" type="xsi:string" required="true">
+                            <wadl:doc>HTTP Basic Authentication</wadl:doc>
+                        </wadl:param>
+                    </wadl:request>
+                    <wadl:response status="200">
+                        <wadl:doc title="OK">wadl:resource was deleted</wadl:doc>
+                        <wadl:param type="xsi:string" style="header" name="date">
+                            <wadl:doc>Deletion date</wadl:doc>
+                        </wadl:param>
+                    </wadl:response>
+                    <wadl:response status="403">
+                        <wadl:doc title="Forbidden">User does not have privilege to delete the wadl:resource</wadl:doc>
+                    </wadl:response>
+                    <wadl:response status="404">
+                        <wadl:doc title="Not Found" />
+                    </wadl:response>
+                </wadl:method>
+            </wadl:resource>
+        </wadl:resource>
+        <wadl:resource path="diag/{name}">
+            <wadl:param type="xsi:string" style="template" name="name">
+                <wadl:doc>Name of target</wadl:doc>
+            </wadl:param>
+            <wadl:param type="xsi:string" style="matrix" name="long">
+                <wadl:doc>Long style</wadl:doc>
+            </wadl:param>
+            <wadl:param style="query" name="length">
+                <wadl:doc>Length</wadl:doc>
+            </wadl:param>
+            <wadl:method name="GET" id="getDiagResults">
+                <wadl:doc>Returns most recent diagnostic execution results</wadl:doc>
+                <wadl:doc title="Example">http://anyhost/diag/selftest</wadl:doc>
+                <wadl:request>
+                    <wadl:param style="query" name="format">
+                        <wadl:doc>Format of wadl:response, use flat or hierarchical</wadl:doc>
+                    </wadl:param>
+                    <wadl:param style="header" name="verbosity" default="brief" type="xsi:string">
+                        <wadl:doc>Detail level of response</wadl:doc>
+                    </wadl:param>
+                </wadl:request>
+                <wadl:response>
+                    <wadl:doc>Returns the state of the component</wadl:doc>
+                    <wadl:representation mediaType="application/xml" />
+                </wadl:response>
+                <wadl:response status="404">
+                    <wadl:doc title="Not Found">If target doesn't exist</wadl:doc>
+                </wadl:response>
+            </wadl:method>
+            <wadl:method name="POST" id="executeDiag">
+                <wadl:doc>Executes diagnostic</wadl:doc>
+                <wadl:doc title="Example">http://anyhost/diag/selftest</wadl:doc>
+                <wadl:request>
+                    <wadl:param name="Authorization" style="header" type="xsi:string" required="true">
+                        <wadl:doc>HTTP Basic Authentication</wadl:doc>
+                    </wadl:param>
+                </wadl:request>
+                <wadl:response status="200">
+                    <wadl:doc title="OK">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</wadl:doc>
+                    <wadl:param type="xsi:string" style="header" name="date">
+                        <wadl:doc>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</wadl:doc>
+                    </wadl:param>
+                </wadl:response>
+            </wadl:method>
+        </wadl:resource>
+        <wadl:resource path="diag">
+            <wadl:method name="GET">
+                <wadl:doc>Get all diagnostic results</wadl:doc>
+            </wadl:method>
+        </wadl:resource>
+    </wadl:resources>
+
+</wadl:application>
