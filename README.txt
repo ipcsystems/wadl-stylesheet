@@ -1,3 +1,5 @@
+README.txt (06-May-2011)
+
 wadl.xsl is an XSLT stylesheet for transforming WADL, a Web Application's XML-based interface specification, into human-readable HTML documentation.
 
 It is available at https://github.com/ipcsystems/wadl-stylesheet.
@@ -13,7 +15,7 @@ Usage
             etc., etc.   
         </wadl:application>
         
-    The stylsheet has been tested with IE 7, Firefox 4 and Chrome 10. Note that links for external XML schema types (http://www.w3.org/TR/xmlschema-2) do not work in Firefox 4. Also, IE and Chrome don't process the XSL if the wadl is opened locally through a file URL. Serve it up over HTTP.
+    The stylesheet has been tested with IE 7, Firefox 4, Chrome 10 and Apache Xalan 2.7.1. Note that links for external XML schema types (http://www.w3.org/TR/xmlschema-2) do not work in Firefox 4. Also, IE and Chrome don't process the XSL if the wadl is opened locally through a file URL. Serve it up over HTTP.
     
     
     The stylesheet works with the current WADL W3C Submission (http://www.w3.org/Submission/wadl/) whose namespace is http://wadl.dev.java.net/2009/02. If you need it to work with the original namespace, http://research.sun.com/wadl/2006/10, simply change the stylesheet's document element's wadl namespace, as follows:

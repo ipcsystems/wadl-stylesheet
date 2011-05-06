@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="wadl.xsl"?>
 <!-- 
-    example.wadl (05-Apr-2011)
+    example.wadl (06-May-2011)
     
     Example Web Application Description Language (WADL) Web Service interface specification,
     which demonstrates my WADL XSLT stylesheet, wadl.xsl.
@@ -40,7 +40,7 @@
                 </wadl:doc>
                 <wadl:method name="GET" id="getReport">
                     <wadl:doc>Description: Executes (generates) custom or standard report.</wadl:doc>
-                    <wadl:doc>Example: http://anyhost/report/standard/GroupedUsers</wadl:doc>
+                    <wadl:doc title="Example">standard/GroupedUsers</wadl:doc>
                     <wadl:request>
                         <wadl:param name="authorization" style="header" type="xsi:string" required="true">
                             <wadl:doc>HTTP Basic Authentication</wadl:doc>
@@ -64,6 +64,7 @@
                         <wadl:representation mediaType="application/xml" element="r:reportParameters"
                             href="ReportParameters.xsd">
                             <wadl:doc title="Report Parameters" />
+                            <wadl:doc title="Example">standard/example/ReportParameters.xml</wadl:doc>
                         </wadl:representation>
                     </wadl:request>
                     <wadl:response status="200">
@@ -76,13 +77,14 @@
                         </wadl:representation>
                         <wadl:representation mediaType="text/csv">
                             <wadl:doc title="CSV"> Comma Separated Values (CSV) formatted report</wadl:doc>
+                            <wadl:doc title="Example">http://anyhost/docs/report/examples/ReportParameters.xml</wadl:doc>
                         </wadl:representation>
                     </wadl:response>
                     <wadl:response status="400">
-                        <wadl:doc title="Bad wadl:request" />
+                        <wadl:doc title="Bad request" />
                     </wadl:response>
                     <wadl:response status="403">
-                        <wadl:doc title="Forbidden">User does not have privilege to read the wadl:resource</wadl:doc>
+                        <wadl:doc title="Forbidden">User does not have privilege to read the resource</wadl:doc>
                     </wadl:response>
                     <wadl:response status="404">
                         <wadl:doc title="Not Found" />
@@ -90,8 +92,8 @@
                 </wadl:method>
 
                 <wadl:method name="PUT" id="putReport">
-                    <wadl:doc>Description: Creates or updates custom report.</wadl:doc>
-                    <wadl:doc>Example: http://anyhost/report/standard/QuarterlyReport</wadl:doc>
+                    <wadl:doc title="Description">Creates or updates custom report.</wadl:doc>
+                    <wadl:doc title="Example">/standard/QuarterlyReport</wadl:doc>
                     <wadl:request>
                         <wadl:param name="Authorization" style="header" type="xsi:string" required="true">
                             <wadl:doc>HTTP Basic Authentication</wadl:doc>
@@ -102,13 +104,13 @@
                         </wadl:representation>
                     </wadl:request>
                     <wadl:response status="200">
-                        <wadl:doc title="OK">wadl:resource was updated</wadl:doc>
+                        <wadl:doc title="OK">Resource was updated</wadl:doc>
                     </wadl:response>
                     <wadl:response status="201">
-                        <wadl:doc title="Created">wadl:resource was created</wadl:doc>
+                        <wadl:doc title="Created">Resource was created</wadl:doc>
                     </wadl:response>
                     <wadl:response status="403">
-                        <wadl:doc title="Forbidden">User does not have privilege to create or update the wadl:resource
+                        <wadl:doc title="Forbidden">User does not have privilege to create or update the resource
                         </wadl:doc>
                     </wadl:response>
                     <wadl:response status="404">
@@ -122,20 +124,20 @@
                 </wadl:param>
                 <wadl:method name="DELETE" id="deleteReport">
                     <wadl:doc>Description: Deletes custom report.</wadl:doc>
-                    <wadl:doc>Example: http://anyhost/report/custom/deviceHealthTest</wadl:doc>
+                    <wadl:doc>An example: http://anyhost/report/custom/deviceHealthTest</wadl:doc>
                     <wadl:request>
                         <wadl:param name="Authorization" style="header" type="xsi:string" required="true">
                             <wadl:doc>HTTP Basic Authentication</wadl:doc>
                         </wadl:param>
                     </wadl:request>
                     <wadl:response status="200">
-                        <wadl:doc title="OK">wadl:resource was deleted</wadl:doc>
+                        <wadl:doc title="OK">Resource was deleted</wadl:doc>
                         <wadl:param type="xsi:string" style="header" name="date">
                             <wadl:doc>Deletion date</wadl:doc>
                         </wadl:param>
                     </wadl:response>
                     <wadl:response status="403">
-                        <wadl:doc title="Forbidden">User does not have privilege to delete the wadl:resource</wadl:doc>
+                        <wadl:doc title="Forbidden">User does not have privilege to delete the resource</wadl:doc>
                     </wadl:response>
                     <wadl:response status="404">
                         <wadl:doc title="Not Found" />
@@ -155,10 +157,10 @@
             </wadl:param>
             <wadl:method name="GET" id="getDiagResults">
                 <wadl:doc>Returns most recent diagnostic execution results</wadl:doc>
-                <wadl:doc title="Example">http://anyhost/diag/selftest</wadl:doc>
+                <wadl:doc title="Example">/diag/selftest</wadl:doc>
                 <wadl:request>
                     <wadl:param style="query" name="format">
-                        <wadl:doc>Format of wadl:response, use flat or hierarchical</wadl:doc>
+                        <wadl:doc>Format of response, use flat or hierarchical</wadl:doc>
                     </wadl:param>
                     <wadl:param style="header" name="verbosity" default="brief" type="xsi:string">
                         <wadl:doc>Detail level of response</wadl:doc>
@@ -166,7 +168,9 @@
                 </wadl:request>
                 <wadl:response>
                     <wadl:doc>Returns the state of the component</wadl:doc>
-                    <wadl:representation mediaType="application/xml" />
+                    <wadl:representation mediaType="application/xml">
+                        <wadl:doc title="Example">selftest_example.xml</wadl:doc>
+                    </wadl:representation>
                 </wadl:response>
                 <wadl:response status="404">
                     <wadl:doc title="Not Found">If target doesn't exist</wadl:doc>
@@ -174,7 +178,7 @@
             </wadl:method>
             <wadl:method name="POST" id="executeDiag">
                 <wadl:doc>Executes diagnostic</wadl:doc>
-                <wadl:doc title="Example">http://anyhost/diag/selftest</wadl:doc>
+                <wadl:doc title="Example">diag/selftest</wadl:doc>
                 <wadl:request>
                     <wadl:param name="Authorization" style="header" type="xsi:string" required="true">
                         <wadl:doc>HTTP Basic Authentication</wadl:doc>
