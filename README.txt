@@ -1,4 +1,4 @@
-README.txt (06-May-2011)
+README.txt (07-Sep-2012)
 
 wadl.xsl is an XSLT stylesheet for transforming WADL, a Web Application's XML-based interface specification, into human-readable HTML documentation.
 
@@ -15,7 +15,7 @@ Usage
             etc., etc.   
         </wadl:application>
         
-    The stylesheet has been tested with IE 7, Firefox 4, Chrome 10 and Apache Xalan 2.7.1. Note that links for external XML schema types (http://www.w3.org/TR/xmlschema-2) do not work in Firefox 4. Also, IE and Chrome don't process the XSL if the wadl is opened locally through a file URL. Serve it up over HTTP.
+    The stylesheet has been tested with IE 9, Firefox 12, Chrome 21 and Apache Xalan 2.7.1 on Windows 7 and Safari and Chrome 21 on iOS 5.1.1. Note that links for external XML schema types do not work in Firefox. Also, Chrome doesn't process the XSL if the wadl is opened locally through a file URL. Serve it up over HTTP(s) to Chrome.
     
     
     The stylesheet works with the current WADL W3C Submission (http://www.w3.org/Submission/wadl/) whose namespace is http://wadl.dev.java.net/2009/02. If you need it to work with the original namespace, http://research.sun.com/wadl/2006/10, simply change the stylesheet's document element's wadl namespace, as follows:
@@ -34,17 +34,19 @@ Usage
 Limitations
 
     The stylesheet does not handle globally defined methods or representations. These must be embedded within method elements (embedded within resources/resource elements). Other limitations are noted in the file header.
+    
+    Browser support for XSLT and CSS varies and the rendered view will differ. For example, Firefox does not generate hyperlinks for parameter types.
 
 -------------------------------------------------------------------------------
 Examples
 
-    The example.wadl is provided to show off the capabilities of the stylesheet.
+    The example_xml.wadl is provided to show off the capabilities of the stylesheet.
 
 
 -------------------------------------------------------------------------------
 License
 
-    Copyright (c) 2011 IPC Systems, Inc.
+    Copyright (c) 2012 IPC Systems, Inc.
     
     Parts of this work are adapted from Mark Notingham's wadl_documentation.xsl, at
         https://github.com/mnot/wadl_stylesheets.
