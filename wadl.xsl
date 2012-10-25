@@ -50,6 +50,7 @@
 <xsl:template match="wadl:application">
     <html>
     <head>
+		<meta charset="UTF-8" />
         <xsl:call-template name="getStyle"/>
         <title><xsl:call-template name="getTitle"/></title>
     </head>
