@@ -10,7 +10,6 @@
     and the README.txt for other usage information.
     Note that the contents of a doc element is rendered as a:
         * hyperlink if the title attribute contains is equal to 'Example'
-        * mono-spaced font ('pre' tag) if content contains the text 'Example'
 			
     Limitations:
         * Ignores globally defined methods, referred to from a resource using a method reference element.
@@ -381,13 +380,10 @@
                         <xsl:otherwise><xsl:value-of select="text()"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <a href="{$url}"><xsl:value-of select="$url"/></a>
-            </xsl:when>
-            <xsl:when test="contains($content, 'Example')">
-               	<div style="white-space:pre-wrap"><pre><xsl:value-of select="."/></pre></div>
+                <a href="{$url}" rel="nofollow"><xsl:value-of select="$url"/></a>
             </xsl:when>
             <xsl:otherwise>
-               	<xsl:value-of select="$content"/>
+               	<xsl:copy-of select="."/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:for-each>
@@ -444,7 +440,7 @@
                 </xsl:if>
             </td>
         <xsl:if test="wadl:doc">
-            <td><xsl:value-of select="wadl:doc"/></td>
+            <td><xsl:copy-of select="wadl:doc"/></td>
         </xsl:if>
     </tr>
 </xsl:template>
