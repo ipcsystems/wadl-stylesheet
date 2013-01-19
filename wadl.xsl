@@ -10,7 +10,6 @@
     and the README.txt for other usage information.
     Note that the contents of a doc element is rendered as a:
         * hyperlink if the title attribute contains is equal to 'Example'
-        * mono-spaced font ('pre' tag) if content contains the text 'Example'
 			
     Limitations:
         * Ignores globally defined methods, referred to from a resource using a method reference element.
