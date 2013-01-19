@@ -383,11 +383,8 @@
                 </xsl:variable>
                 <a href="{$url}"><xsl:value-of select="$url"/></a>
             </xsl:when>
-            <xsl:when test="contains($content, 'Example')">
-               	<div style="white-space:pre-wrap"><pre><xsl:value-of select="."/></pre></div>
-            </xsl:when>
             <xsl:otherwise>
-               	<xsl:value-of select="$content"/>
+               	<xsl:copy-of select="."/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:for-each>
@@ -444,7 +441,7 @@
                 </xsl:if>
             </td>
         <xsl:if test="wadl:doc">
-            <td><xsl:value-of select="wadl:doc"/></td>
+            <td><xsl:copy-of select="wadl:doc"/></td>
         </xsl:if>
     </tr>
 </xsl:template>
