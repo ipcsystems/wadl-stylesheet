@@ -380,7 +380,7 @@
                         <xsl:otherwise><xsl:value-of select="text()"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <a href="{$url}"><xsl:value-of select="$url"/></a>
+                <a href="{$url}" rel="nofollow"><xsl:value-of select="$url"/></a>
             </xsl:when>
             <xsl:otherwise>
                	<xsl:copy-of select="."/>
