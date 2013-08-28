@@ -198,11 +198,11 @@
 
         <div class="methods">
             <xsl:for-each select="wadl:method">
-            <div class="method">
+            <xsl:variable name="name" select="@name"/>
+            <div class="method method-{$name}">
                 <table class="methodNameTable">
-                    <tr>
-                        <td class="methodNameTd" style="font-weight: bold">
-                            <xsl:variable name="name" select="@name"/>
+                    <tr class="methodName-{$name}">
+                        <td class="methodNameTd" style="">
                             <xsl:variable name="id2"><xsl:call-template name="getId"/></xsl:variable>
                             <a name="{$id2}"><xsl:value-of select="$name"/></a>
                         </td>
@@ -564,7 +564,20 @@
             font-size: 1.4em;
         }
         .methodNameTd {
+            font-weight: bold;
             background-color: #eef;
+        }
+        .method-GET .methodNameTd {
+            background-color: #119BDF;
+        }
+        .method-POST .methodNameTd {
+            background-color: #52CE0E;
+        }
+        .method-DELETE .methodNameTd {
+            background-color: #E02A10;
+        }
+        .method-PUT .methodNameTd {
+            background-color: #e08f10;
         }
         h1 {
             font-size: 2m;
