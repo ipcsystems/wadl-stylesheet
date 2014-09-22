@@ -387,7 +387,7 @@
                	<div style="white-space:pre-wrap"><pre><xsl:value-of select="."/></pre></div>
             </xsl:when>
             <xsl:otherwise>
-               	<xsl:value-of select="$content"/>
+               	<xsl:value-of select="$content" disable-output-escaping="yes"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:for-each>
