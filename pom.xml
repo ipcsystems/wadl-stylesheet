@@ -19,7 +19,8 @@
         <configuration>
           <transformationSets>
             <transformationSet>
-              <dir>src/main/xml</dir>
+              <!-- Required: export XML_INPUT_DIR="dirpath" -->
+              <dir>${env.XML_INPUT_DIR}</dir>
               <stylesheet>wadl.xsl</stylesheet>
             </transformationSet>
           </transformationSets>
